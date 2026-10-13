@@ -1,47 +1,65 @@
 # Memory of Truth
 
-**After decades of conversations, will an AI remember what you actually said—or only what it guessed you meant?**
+**A false memory can outlive the conversation that created it.** An AI may misread one sentence, store its interpretation as a fact, and repeat it years later as if the owner had said it. A convincing answer is then built on a false starting point. For a digital companion intended to last decades, that is more than an awkward mistake.
 
-Over years of conversations, you may tell AI systems about decisions, work, relationships, changing beliefs, and moments you want to remember. That history can end up scattered across chats and reduced to summaries that are useful today but leave out what you actually said, where a claim came from, or how your thinking changed. If you move to another AI, you may have to rebuild that context again.
+## The problem: when an AI's note becomes "truth"
 
-Memory of Truth is being developed around one principle: **the owner decides what becomes a lasting record.** An AI may propose a memory. The owner reviews and approves the accepted version. The record should preserve its source, attribution, time context, and revisions, so a later AI can distinguish the owner's words from an inference and a current fact from an older one.
+We distinguish two layers. **L1** is the model's protected instruction layer: the rules it is meant to follow. **L2** is the external memory layer: records that can be written, changed, retrieved, and placed back into a model's context. Protecting L1 does not make every statement in L2 true. If an AI's guess enters L2 as an accepted fact, later models may treat that guess as the owner's history.
 
-## Why build another kind of memory?
+Memory of Truth is being developed around a stricter boundary: **an AI can propose a memory; only the owner, using an owner-held key, can approve it as the accepted record.** The key should stay under the owner's control. The owner's actual words must remain distinct from a model's paraphrase or inference. Each accepted record should retain its source, who asserted and approved it, when it was valid, and how it changed. A correction should add a traceable revision rather than silently erase the past. The record should remain usable when the model or platform changes.
 
-Products such as [ChatGPT Memory](https://help.openai.com/en/articles/8590148-memory-in-chatgpt), [Claude Memory](https://support.claude.com/en/articles/11817273-use-claude-s-chat-search-and-memory-to-build-on-previous-context), and [Gemini's memory of past chats](https://support.google.com/gemini/answer/16598469?hl=en) already help people continue conversations. They have different controls; Claude also offers [memory import and export](https://support.claude.com/en/articles/12123587-import-and-export-your-memory-from-claude). These are useful features, but they are built around each service's own personalization experience. ChatGPT says it does not retain every detail from every conversation and may change what it derives from chat history. Gemini's past-chat memory draws on Gemini activity. Claude describes its memory as focused on work-related context and notes that imported personal details may not all be retained.
+This rule protects *who has authority to approve a memory*. It does not claim that a person can never be mistaken. The aim is to prevent an AI-generated assertion from quietly becoming the owner's truth without the owner's decision.
 
-**For a memory meant to last decades, convenience inside one assistant is not enough.** The project aims for a separate, owner-controlled source of truth that can be used with different models and agents. It should let the owner see what was recorded, why, and from where; correct a mistake without erasing the history; and export and restore the record. That is the standard we are building toward, not a claim that the current development build already meets it.
+## How this differs from existing memory
 
-## A digital companion over many years
+Memory products already solve important parts of the problem. [Mem0](https://github.com/mem0ai/mem0/blob/main/docs/core-concepts/how-it-works.mdx) extracts and retrieves durable facts. [Zep](https://help.getzep.com/overview) builds temporal context graphs and traces graph data to sources. [LangMem](https://langchain-ai.github.io/langmem/reference/memory/) can create and update structured memories. [Letta](https://docs.letta.com/v1-sdk/memory/memory-blocks) gives agents persistent memory blocks, including configurable read-only blocks. [ChatGPT Memory](https://help.openai.com/en/articles/8590148-memory-in-chatgpt) and [Claude Memory](https://support.claude.com/en/articles/11817273-use-claude-s-chat-search-and-memory-to-build-on-previous-context) personalize conversations; Claude also offers [memory import and export](https://support.claude.com/en/articles/12123587-import-and-export-your-memory-from-claude).
 
-The long-term idea is a digital companion that can keep useful context as the person and the AI tools around them change. It should remember **with evidence and with the owner's consent**, rather than gradually turning guesses or convenient summaries into supposed facts.
+These capabilities matter. **Our distinct requirement is the mandatory owner-controlled step between a model's proposed statement and a canonical record**, followed by a checkable history of what was approved and later retrieved. Source tracking, time awareness, and export each help; none alone establishes that the owner authorized the claim. This is the design boundary we intend to test, not a claim that other systems cannot be configured or extended in different ways.
 
-These situations show why that matters:
+## From proposal to proof
 
-- **An AI gets something wrong.** It infers a lasting preference from one conversation. The owner can reject the proposed memory instead of letting the inference quietly become part of their history.
-- **A person's view changes.** Years later, the assistant should be able to show both an earlier decision and a later revision, with their time and sources, instead of treating one as though the other never existed.
-- **The person changes AI services.** Their approved record should remain theirs and be usable with another model or agent without starting their story from zero.
-- **Someone asks where a memory came from.** The answer should lead back to the original source and identify what the owner said, what an AI inferred, and what was subsequently approved or corrected.
+A trustworthy memory should let its owner inspect the whole path:
 
-There is a further, deeply personal purpose: **a digital legacy for loved ones, in a truthful form.** If the owner chooses to preserve and share parts of their history, the hope is that those closest to them could one day receive the person's own words and context, with a clear record of where each part came from, rather than an AI's invented certainty about who that person was. How access and sharing would work has not been defined; this is a long-term goal, not a feature available today.
+1. **Proposal:** show the conversation or other source, the exact statement, and what the AI inferred from it.
+2. **Approval:** record the owner's decision through the owner-held key. Without it, a proposal does not become canonical.
+3. **History:** keep the accepted version, its time context, and later corrections without rewriting earlier evidence.
+4. **Recall:** retrieve the relevant record with its source and approval status, including an older version when the question calls for history.
+5. **Portability:** export and restore the record, then show that another model can use the same approved memory.
 
-## Where the project stands
+**Every step should leave evidence that can be checked.** This describes the standard for the project. We will not present the full chain as complete until it has been demonstrated end to end.
 
-Memory of Truth is in development and under test. **There is no public download or open test enrollment yet.** We will announce a working test release, supported environments, and installation instructions when it is ready. No release date has been announced.
+## Three tests for a real V1
 
-The memory engine's source code is private at this stage. This repository is the public home for the project's description, plans, progress updates, questions, and community feedback. Publishing these documents does not make the engine open source.
+We want V1 to pass three plain-language tests:
 
-## Help shape the first test
+- **Remember without manual note-taking.** The system notices a possible lasting memory and proposes it; the owner still decides whether it is accepted.
+- **Recall without a special command.** When relevant, an assistant brings the approved memory into the conversation and can show where it came from.
+- **Survive a model change.** The owner's memory remains usable after switching to another supported model or agent.
 
-**Are you interested in following or eventually testing this idea?** Tell us what long-term memory would need to get right for you. Which AI models or applications would you want it to work with? Would you run it on your own computer or VPS? Which matters most: reliable recall, the original source, the history of changes, portability, or something we have missed?
+A prototype or a high test count alone is not enough. These behaviors must work together in an installable version.
 
-Join [GitHub Discussions](https://github.com/Vanjaus/Memory-of-truth/discussions) with questions, examples, criticism, or an expression of interest. Please use hypothetical or synthetic examples; do not post private memories, personal data, credentials, or API keys. A comment is not test enrollment or a promise of access. We will publish test terms before enrollment opens.
+## What this means over a lifetime
 
-## Planned path
+A long-term digital companion should carry useful context as the person and the AI tools around them change. If an AI misreads a preference, the owner can reject it. If a view changes years later, both the earlier and later positions should remain understandable in their original time. If the owner changes services, the approved record should travel with them. If someone asks why the companion believes something, the answer should lead back to its source.
 
-1. Explain the project and listen to potential users.
-2. Continue development and verify the complete memory cycle, including recall, owner approval, history, and recovery.
-3. Announce a controlled test release with installation and testing instructions when it is ready.
-4. Use real tester feedback to shape a stable V1.
+There is also a deeply personal ambition: **a truthful digital legacy for loved ones.** If the owner chooses to preserve and share parts of their history, those closest to them should be able to receive the person's own words and context, with a clear account of what came from the person and what an AI inferred. Access and sharing rules for such a legacy have not yet been defined. This is a long-term goal, not an available feature.
 
-Read [the roadmap](ROADMAP.md), [future tester plans](FOUNDING_TESTERS.md), and [licensing direction](LICENSING.md). They describe the current plan and do not claim that unreleased features are available today.
+## Status: V1 is in development
+
+**Already public:** this repository describes the project and has [Discussions](https://github.com/Vanjaus/Memory-of-truth/discussions) open for questions and interest. **Internal work:** parts of the memory engine and an automated test suite exist. The complete approval-to-recall cycle, history and contradiction handling, independent backup and restore, model switching, and a repeatable installation still need to be verified together before a public test release.
+
+**There is no public download or open tester enrollment yet.** The engine's source code remains private. We will publish supported environments, a working build, test tasks, limitations, and installation instructions when they are ready. No release date has been announced.
+
+## Join the future test community
+
+**Would you want to test a memory that you control?** Tell us which AI models or applications you use, whether you would run the system on your computer or VPS, and which failure worries you most: a false remembered fact, missing history, poor recall, loss of access when changing providers, or something else. Share a hypothetical example in [GitHub Discussions](https://github.com/Vanjaus/Memory-of-truth/discussions). Please do not publish private memories, personal data, credentials, or API keys.
+
+The planned ways to access the product are:
+
+- **Development and beta testers:** selected participants would test a working development version for free on their own computer or VPS, using their own third-party AI API accounts where needed.
+- **Founding GitHub VIP testers:** under eligibility and participation rules to be published before enrollment, the intended benefit is a free permanent license for commercial V1, including V1 updates, and early access to test V2. Early V2 testing does not itself include a permanent V2 license.
+- **Later buyers:** the intended model is a one-time purchase of a major version, with updates within that version included and a discounted path to a later major version for existing owners. An optional managed cloud service may come later.
+
+These are **planned access and product terms**, not an open enrollment or a grant of software rights today. Commenting now expresses interest; it does not automatically assign tester or VIP status. See [future tester plans](FOUNDING_TESTERS.md) and [licensing direction](LICENSING.md) for the current details. The published [LICENSE](LICENSE) applies to the documents in this repository; the unreleased engine has no public source-code license here.
+
+Read the [roadmap](ROADMAP.md) for the planned sequence of work.

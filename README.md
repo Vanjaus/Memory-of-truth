@@ -1,6 +1,10 @@
 # Memory of Truth
 
-**A false memory can outlive the conversation that created it.** An AI may misread one sentence, store its interpretation as a fact, and repeat it years later as if the owner had said it. A convincing answer is then built on a false starting point. For a digital companion intended to last decades, that is more than an awkward mistake.
+**Your AI just told you something about yourself—and you are not sure it is true.**
+
+Yesterday you asked for a restaurant recommendation. Today it says, *“As we agreed, you love Indian food.”* You do not remember saying that. Perhaps you did. Perhaps the AI inferred it from something else. Perhaps someone else mentioned it. **From that answer alone, you cannot tell.**
+
+That is the problem Memory of Truth is being built to solve. A false memory can outlive the conversation that created it and follow a person for years.
 
 ## The problem: when an AI's note becomes "truth"
 
@@ -10,11 +14,41 @@ Memory of Truth is being developed around a stricter boundary: **an AI can propo
 
 This rule protects *who has authority to approve a memory*. It does not claim that a person can never be mistaken. The aim is to prevent an AI-generated assertion from quietly becoming the owner's truth without the owner's decision.
 
-## How this differs from existing memory
+## What existing tools do
 
-Memory products already solve important parts of the problem. [Mem0](https://github.com/mem0ai/mem0/blob/main/docs/core-concepts/how-it-works.mdx) extracts and retrieves durable facts. [Zep](https://help.getzep.com/overview) builds temporal context graphs and traces graph data to sources. [LangMem](https://langchain-ai.github.io/langmem/reference/memory/) can create and update structured memories. [Letta](https://docs.letta.com/v1-sdk/memory/memory-blocks) gives agents persistent memory blocks, including configurable read-only blocks. [ChatGPT Memory](https://help.openai.com/en/articles/8590148-memory-in-chatgpt) and [Claude Memory](https://support.claude.com/en/articles/11817273-use-claude-s-chat-search-and-memory-to-build-on-previous-context) personalize conversations; Claude also offers [memory import and export](https://support.claude.com/en/articles/12123587-import-and-export-your-memory-from-claude).
+| Tool | What it offers |
+| --- | --- |
+| [Mem0](https://github.com/mem0ai/mem0/blob/main/docs/core-concepts/how-it-works.mdx) | Extracts and retrieves lasting facts from conversations. |
+| [Zep](https://help.getzep.com/overview) | Builds temporal context graphs and traces graph data to sources. |
+| [LangMem](https://langchain-ai.github.io/langmem/reference/memory/) | Creates and updates structured memories. |
+| [Letta](https://docs.letta.com/v1-sdk/memory/memory-blocks) | Gives agents persistent memory blocks, including configurable read-only blocks. |
+| [ChatGPT Memory](https://help.openai.com/en/articles/8590148-memory-in-chatgpt) and [Claude Memory](https://support.claude.com/en/articles/11817273-use-claude-s-chat-search-and-memory-to-build-on-previous-context) | Personalize conversations; Claude also offers [memory import and export](https://support.claude.com/en/articles/12123587-import-and-export-your-memory-from-claude). |
 
-These capabilities matter. **Our distinct requirement is the mandatory owner-controlled step between a model's proposed statement and a canonical record**, followed by a checkable history of what was approved and later retrieved. Source tracking, time awareness, and export each help; none alone establishes that the owner authorized the claim. This is the design boundary we intend to test, not a claim that other systems cannot be configured or extended in different ways.
+All solve **part** of the problem. Export helps. Source tracking helps. Time awareness helps. The question this project places at the center is: **who approved that a model's statement should become the owner's accepted memory?**
+
+## Our difference: a required owner decision
+
+Memory of Truth puts an owner-controlled step between a model's proposal and an approved record:
+
+```text
+Model proposes: “The owner likes Indian food.”
+                    ↓
+             Wait for the owner
+                    ↓
+Owner confirms the statement with their key
+                    ↓
+Approved record, with its source and decision trail
+```
+
+**Without that decision, there is no canonical record.** The model cannot promote its own inference into the owner's accepted history.
+
+In practice, the intended result is simple:
+
+- **Every accepted record has evidence:** who said what, when, and from which source.
+- **Its history can be checked:** what was approved, what was later superseded, and when.
+- **The owner controls the boundary:** the model or platform cannot approve on the owner's behalf.
+
+This is the design boundary we are testing. Other systems may be configured or extended in different ways. Memory of Truth aims to show **what was proposed, what the owner approved, and why a memory was later used**.
 
 ## From proposal to proof
 

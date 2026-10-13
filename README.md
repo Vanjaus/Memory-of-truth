@@ -4,7 +4,9 @@
 
 Imagine your assistant says, *“As we agreed, you reported additional income to the tax authority and set aside money for a penalty.”* You stop. **You do not remember saying that—and you may not owe any penalty.** Perhaps the model inferred an obligation while trying to protect you from a perceived regulatory risk. Perhaps it turned a caution into a claim about what you did. **If you trust that claim, you could pay money you do not owe.**
 
-Models have different protections, trained with good intentions to address real or perceived risks. An overly cautious response can still be wrong about your life. **Protections in the model's instruction layer (L1) do not, by themselves, keep an unverified claim out of external memory (L2).** If stored as a fact, that claim can follow you for years. This is one possible scenario; Memory of Truth is being built to prevent the underlying failure.
+LLMs operate under very different rules: from relatively unrestricted models to models shaped by safety measures, provider policies, ethical choices, and applicable laws. Those rules may address real risks, but **a model's rules are not evidence about your life.** An overly cautious answer may turn the model's own risk assessment into a claim about what you said, did, or owe. Protections in its instruction layer (L1) do not, by themselves, keep that unverified claim out of external memory (L2).
+
+**The first connection is especially sensitive.** A model introduced to a new memory may propose an initial picture of you through its own L1 rules. If those proposals become accepted records automatically, later models could inherit that picture as if you had confirmed it. Memory of Truth is being built to prevent that failure.
 
 ## What this means over a lifetime
 
@@ -15,6 +17,8 @@ There is also a deeply personal ambition: **a truthful digital legacy for loved 
 ## The problem: when an AI's note becomes "truth"
 
 We distinguish two layers. **L1** is the model's protected instruction layer: the rules it is meant to follow. **L2** is the external memory layer: records that can be written, changed, retrieved, and placed back into a model's context. Protecting L1 does not make every statement in L2 true. If an AI's guess enters L2 as an accepted fact, later models may treat that guess as the owner's history.
+
+**The design goal is that no connected model can rewrite accepted L2 memory to fit its own L1 rules or assumptions.** This applies when memory is first connected, when another model takes over, and when a model later proposes a correction. Each model may read approved records and suggest additions or changes; its suggestions remain proposals until the owner approves them. A model's policies or caution cannot stand in for the owner's decision.
 
 Memory of Truth is being developed around a stricter boundary: **an AI can propose a memory; only the owner, using an owner-held key, can approve it as the accepted record.** The key should stay under the owner's control. The owner's actual words must remain distinct from a model's paraphrase or inference. Each accepted record should retain its source, who asserted and approved it, when it was valid, and how it changed. A correction should add a traceable revision rather than silently erase the past. The record should remain usable when the model or platform changes.
 
@@ -63,7 +67,7 @@ A trustworthy memory should let its owner inspect the whole path:
 2. **Approval:** record the owner's decision through the owner-held key. Without it, a proposal does not become canonical.
 3. **History:** keep the accepted version, its time context, and later corrections without rewriting earlier evidence.
 4. **Recall:** retrieve the relevant record with its source and approval status, including an older version when the question calls for history.
-5. **Portability:** export and restore the record, then show that another model can use the same approved memory.
+5. **Portability:** export and restore the record, then show that another model can use the same approved memory without rewriting it to fit its own rules.
 
 **Every step should leave evidence that can be checked.** This describes the standard for the project. We will not present the full chain as complete until it has been demonstrated end to end.
 

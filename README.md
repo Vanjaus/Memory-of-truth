@@ -1,10 +1,16 @@
 # Memory of Truth
 
-**Your AI just told you something about yourself—and you are not sure it is true.**
+**Your AI says you set aside money for a tax penalty—and you do not know why.**
 
-Yesterday you asked for a restaurant recommendation. Today it says, *“As we agreed, you love Indian food.”* You do not remember saying that. Perhaps you did. Perhaps the AI inferred it from something else. Perhaps someone else mentioned it. **From that answer alone, you cannot tell.**
+Imagine your assistant says, *“As we agreed, you reported additional income to the tax authority and set aside money for a penalty.”* You stop. **You do not remember saying that—and you may not owe any penalty.** Perhaps the model inferred an obligation while trying to protect you from a perceived regulatory risk. Perhaps it turned a caution into a claim about what you did. **If you trust that claim, you could pay money you do not owe.**
 
-That is the problem Memory of Truth is being built to solve. A false memory can outlive the conversation that created it and follow a person for years.
+Models have different protections, trained with good intentions to address real or perceived risks. An overly cautious response can still be wrong about your life. **Protections in the model's instruction layer (L1) do not, by themselves, keep an unverified claim out of external memory (L2).** If stored as a fact, that claim can follow you for years. This is one possible scenario; Memory of Truth is being built to prevent the underlying failure.
+
+## What this means over a lifetime
+
+A long-term digital companion should carry useful context as the person and the AI tools around them change. If an AI misreads a preference, the owner can reject it. If a view changes years later, both the earlier and later positions should remain understandable in their original time. If the owner changes services, the approved record should travel with them. If someone asks why the companion believes something, the answer should lead back to its source.
+
+There is also a deeply personal ambition: **a truthful digital legacy for loved ones.** If the owner chooses to preserve and share parts of their history, those closest to them should be able to receive the person's own words and context, with a clear account of what came from the person and what an AI inferred. Access and sharing rules for such a legacy have not yet been defined. This is a long-term goal, not an available feature.
 
 ## The problem: when an AI's note becomes "truth"
 
@@ -31,13 +37,12 @@ All solve **part** of the problem. Export helps. Source tracking helps. Time awa
 Memory of Truth puts an owner-controlled step between a model's proposal and an approved record:
 
 ```text
-Model proposes: “The owner likes Indian food.”
+Model proposes: “The owner owes a tax penalty.”
                     ↓
              Wait for the owner
                     ↓
-Owner confirms the statement with their key
-                    ↓
-Approved record, with its source and decision trail
+Owner rejects it → no canonical record of the claim
+Owner confirms it with their key → approved record with evidence
 ```
 
 **Without that decision, there is no canonical record.** The model cannot promote its own inference into the owner's accepted history.
@@ -71,12 +76,6 @@ We want V1 to pass three plain-language tests:
 - **Survive a model change.** The owner's memory remains usable after switching to another supported model or agent.
 
 A prototype or a high test count alone is not enough. These behaviors must work together in an installable version.
-
-## What this means over a lifetime
-
-A long-term digital companion should carry useful context as the person and the AI tools around them change. If an AI misreads a preference, the owner can reject it. If a view changes years later, both the earlier and later positions should remain understandable in their original time. If the owner changes services, the approved record should travel with them. If someone asks why the companion believes something, the answer should lead back to its source.
-
-There is also a deeply personal ambition: **a truthful digital legacy for loved ones.** If the owner chooses to preserve and share parts of their history, those closest to them should be able to receive the person's own words and context, with a clear account of what came from the person and what an AI inferred. Access and sharing rules for such a legacy have not yet been defined. This is a long-term goal, not an available feature.
 
 ## Status: V1 is in development
 
